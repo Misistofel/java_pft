@@ -13,4 +13,6 @@ public class PointTest {
     Assert.assertEquals(p.distance(),1.4142135623730951);
 
   }
+
+
 }
