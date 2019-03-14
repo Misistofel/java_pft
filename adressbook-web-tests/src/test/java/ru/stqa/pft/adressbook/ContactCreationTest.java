@@ -1,8 +1,9 @@
 package ru.stqa.pft.adressbook;
 
 import java.util.concurrent.TimeUnit;
+
 import org.testng.annotations.*;
-import static org.testng.Assert.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -17,52 +18,72 @@ public class ContactCreationTest {
 
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/group.php");
+    login("admin", "secret");
+  }
+
+  private void login(String username, String password) {
     wd.findElement(By.name("user")).click();
     wd.findElement(By.name("user")).clear();
-    wd.findElement(By.name("user")).sendKeys("admin");
+    wd.findElement(By.name("user")).sendKeys(username);
     wd.findElement(By.name("pass")).clear();
-    wd.findElement(By.name("pass")).sendKeys("secret");
+    wd.findElement(By.name("pass")).sendKeys(password);
     wd.findElement(By.xpath("//input[@value='LOGIN']")).click();
   }
 
   @Test
   public void testContactCreation() throws Exception {
 
-    wd.findElement(By.linkText("ADD_NEW")).click();
+    goToAddNewPage();
+    fillAddNewForm(new AddContactData("Margo", "Marina", "Tofel", "Kyiv", "380111111111", "380111111112", "mtofel@mail.ru", "1", "JANUARY", "1990"));
+    submitAddNewCreation();
+    logout();
+  }
+
+  private void logout() {
+    wd.findElement(By.linkText("LOGOUT")).click();
+  }
+
+  private void submitAddNewCreation() {
+    wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
+  }
+
+  private void fillAddNewForm(AddContactData addContactData) {
     wd.findElement(By.name("firstname")).click();
     wd.findElement(By.name("firstname")).clear();
-    wd.findElement(By.name("firstname")).sendKeys("Margo");
+    wd.findElement(By.name("firstname")).sendKeys(addContactData.getFirstname());
     wd.findElement(By.name("middlename")).click();
     wd.findElement(By.name("middlename")).clear();
-    wd.findElement(By.name("middlename")).sendKeys("Marina");
+    wd.findElement(By.name("middlename")).sendKeys(addContactData.getMiddlename());
     wd.findElement(By.name("lastname")).click();
     wd.findElement(By.name("lastname")).clear();
-    wd.findElement(By.name("lastname")).sendKeys("Tofel");
+    wd.findElement(By.name("lastname")).sendKeys(addContactData.getLastname());
     wd.findElement(By.name("address")).click();
     wd.findElement(By.name("address")).clear();
-    wd.findElement(By.name("address")).sendKeys("Kyiv");
+    wd.findElement(By.name("address")).sendKeys(addContactData.getAddress());
     wd.findElement(By.xpath("//div[@id='content']/form/label[9]")).click();
     wd.findElement(By.name("home")).click();
     wd.findElement(By.name("home")).click();
     wd.findElement(By.name("home")).clear();
-    wd.findElement(By.name("home")).sendKeys("380111111111");
+    wd.findElement(By.name("home")).sendKeys(addContactData.getHomePhone());
     wd.findElement(By.name("mobile")).click();
     wd.findElement(By.name("mobile")).clear();
-    wd.findElement(By.name("mobile")).sendKeys("380111111112");
+    wd.findElement(By.name("mobile")).sendKeys(addContactData.getMobilePhone());
     wd.findElement(By.name("email")).click();
     wd.findElement(By.name("email")).clear();
-    wd.findElement(By.name("email")).sendKeys("mtofel@mail.ru");
+    wd.findElement(By.name("email")).sendKeys(addContactData.getEmail());
     wd.findElement(By.name("bday")).click();
-    new Select(wd.findElement(By.name("bday"))).selectByVisibleText("1");
+    new Select(wd.findElement(By.name("bday"))).selectByVisibleText(addContactData.getDayOfBirth());
     wd.findElement(By.name("bday")).click();
     wd.findElement(By.name("bmonth")).click();
-    new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText("JANUARY");
+    new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(addContactData.getMonOfBirth());
     wd.findElement(By.name("bmonth")).click();
     wd.findElement(By.name("byear")).click();
     wd.findElement(By.name("byear")).clear();
-    wd.findElement(By.name("byear")).sendKeys("1990");
-    wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
-    wd.findElement(By.linkText("LOGOUT")).click();
+    wd.findElement(By.name("byear")).sendKeys(addContactData.getYearOfBirth());
+  }
+
+  private void goToAddNewPage() {
+    wd.findElement(By.linkText("ADD_NEW")).click();
   }
 
   @AfterClass(alwaysRun = true)
