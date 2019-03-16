@@ -1,13 +1,16 @@
-package ru.stqa.pft.adressbook;
+package ru.stqa.pft.addressbook;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
-import org.testng.annotations.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class GroupCreationTests {
-  private WebDriver wd;
-
+public class TestBase {
+      FirefoxDriver wd;
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
@@ -27,30 +30,15 @@ public class GroupCreationTests {
     wd.findElement(By.xpath("//input[@value='LOGIN']")).click();
   }
 
-  @Test
-  public void testGroupCreationTests() throws Exception {
-
-    gotoGroupPage();
-    initGroupCreation();
-    fillGroupForm(new GroupData("test12", "test13", "test11"));
-    submitGroupCreation();
-    returnToGroupPage();
-    logoutFrom();
-  }
-
-  private void logoutFrom() {
-    wd.findElement(By.linkText("LOGOUT")).click();
-  }
-
-  private void returnToGroupPage() {
+  protected void returnToGroupPage() {
     wd.findElement(By.linkText("group page")).click();
   }
 
-  private void submitGroupCreation() {
+  protected void submitGroupCreation() {
     wd.findElement(By.name("submit")).click();
   }
 
-  private void fillGroupForm(GroupData groupData) {
+  protected void fillGroupForm(GroupData groupData) {
     wd.findElement(By.name("group_name")).click();
     wd.findElement(By.name("group_name")).clear();
     wd.findElement(By.name("group_name")).sendKeys(groupData.getName());
@@ -62,11 +50,11 @@ public class GroupCreationTests {
     wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
   }
 
-  private void initGroupCreation() {
+  protected void initGroupCreation() {
     wd.findElement(By.name("new")).click();
   }
 
-  private void gotoGroupPage() {
+  protected void gotoGroupPage() {
     wd.findElement(By.linkText("GROUPS")).click();
   }
 
@@ -94,5 +82,11 @@ public class GroupCreationTests {
     }
   }
 
+  protected void deleteSelectedGroups() {
+    wd.findElement(By.name("delete")).click();
+  }
 
+  protected void selectGroup() {
+    wd.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='test y'])[1]/input[1]")).click();
+  }
 }
