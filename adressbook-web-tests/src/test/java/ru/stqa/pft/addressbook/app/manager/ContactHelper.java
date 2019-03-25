@@ -74,4 +74,12 @@ public class ContactHelper extends HelperBase {
     wd.findElement(locator).clear();
     wd.findElement(locator).sendKeys(text);
   }
+  public void selectContact() {
+    click(By.name("selected[]"));
+  }
+
+  public void deleteSelectedContact()
+  {
+    click(By.xpath("//input[@value='DELETE']"));
+  }
 }
