@@ -5,10 +5,8 @@ import org.testng.annotations.BeforeMethod;
 import ru.stqa.pft.addressbook.app.manager.ApplicationManager;
 
 public class TestBase {
-
-
-  //link at new object with type "application manager"
   protected final ApplicationManager app = new ApplicationManager();
+
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
@@ -21,4 +19,7 @@ public class TestBase {
 
   }
 
+  public ApplicationManager getApp() {
+    return app;
+  }
 }
