@@ -17,7 +17,6 @@ public class ApplicationManager {
 
   private ContactHelper contactHelper ;
   private SessionHelper sessionHelper;
-
   private NavigationHelper navigationHelper;
   private  GroupHelper groupHelper ;
 
@@ -31,10 +30,7 @@ public class ApplicationManager {
      wd = new InternetExplorerDriver();
    }
 
-   }
-
-
-    wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    wd.manager().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/group.php");
     groupHelper = new GroupHelper(wd);
     contactHelper=new ContactHelper(wd);
