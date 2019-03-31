@@ -15,37 +15,41 @@ public class ApplicationManager {
   WebDriver wd;
 
 
-  private ContactHelper contactHelper ;
+  private ContactHelper contactHelper;
   private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
-  private  GroupHelper groupHelper ;
+  private GroupHelper groupHelper;
+  private String browser;
+
+  public ApplicationManager(String browser) {
+    this.browser = browser;
+  }
 
   public void init() {
-    String browser= BrowserType.FIREFOX;
-   if(browser==BrowserType.FIREFOX){
-     wd = new FirefoxDriver();
-   }else if (browser==BrowserType.CHROME){
-     wd = new ChromeDriver();
-    }else if (browser==BrowserType.IE){
-     wd = new InternetExplorerDriver();
-   }
+    if (browser.equals(BrowserType.FIREFOX)) {
+      wd = new FirefoxDriver();
+    } else if (browser.equals(BrowserType.CHROME)) {
+      wd = new ChromeDriver();
+    } else if (browser.equals(BrowserType.IE)) {
+      wd = new InternetExplorerDriver();
+    }
 
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/group.php");
     groupHelper = new GroupHelper(wd);
-    contactHelper=new ContactHelper(wd);
+    contactHelper = new ContactHelper(wd);
     navigationHelper = new NavigationHelper(wd);
-    sessionHelper=new SessionHelper(wd);
+    sessionHelper = new SessionHelper(wd);
     sessionHelper.login("admin", "secret");
   }
 
   private void login(String username, String password) {
-     wd.findElement(By.name("user")).click();
-     wd.findElement(By.name("user")).clear();
-     wd.findElement(By.name("user")).sendKeys(username);
-     wd.findElement(By.name("pass")).clear();
-     wd.findElement(By.name("pass")).sendKeys(password);
-     wd.findElement(By.xpath("//input[@value='LOGIN']")).click();
+    wd.findElement(By.name("user")).click();
+    wd.findElement(By.name("user")).clear();
+    wd.findElement(By.name("user")).sendKeys(username);
+    wd.findElement(By.name("pass")).clear();
+    wd.findElement(By.name("pass")).sendKeys(password);
+    wd.findElement(By.xpath("//input[@value='LOGIN']")).click();
   }
 
   public void stop() {
@@ -74,8 +78,7 @@ public class ApplicationManager {
     return groupHelper;
   }
 
-  public NavigationHelper getNavigationHelper()
-  {
+  public NavigationHelper getNavigationHelper() {
     return navigationHelper;
   }
 
