@@ -1,8 +1,12 @@
 package ru.stqa.pft.addressbook.app.manager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.AddContactData;
 
 public class ContactHelper extends HelperBase {
@@ -26,7 +30,24 @@ public class ContactHelper extends HelperBase {
     fullFillBdayOdContact(addContactData);
     fullFillBmonthOfContact(addContactData);
     fullFillbmonthOfContact(addContactData);
+    //выбрать елемент из выпадающего списка
+    if (isElementPresent(wd.findElement(By.name("new group")))) {
+      new Select(wd.findElement(By.name("new group"))).selectByVisibleText(addContactData.getGroup());
+    }
+
   }
+
+  private boolean isElementPresent(By locator) {
+    try {
+      wd.findElement(locator);
+      return true;
+    } catch (NoSuchElementException ex) {
+      return false;
+    }
+
+
+  }
+
 
   public void fullFillbmonthOfContact(AddContactData addContactData) {
     fullfillFirstNameOfContact(By.name("byear"), addContactData.getYearOfBirth());
