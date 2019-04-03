@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.AddContactData;
 
 public class ContactHelper extends HelperBase {
@@ -19,7 +20,7 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
 
-  public void fillAddNewForm(AddContactData addContactData) {
+  public void fillAddNewForm(AddContactData addContactData, boolean creation) {
     fullfillFirstNameOfContact(By.name("firstname"), addContactData.getFirstname());
     fullFillMiddlenameOfContact(addContactData);
     fullFillLastnameOfContact(addContactData);
@@ -30,22 +31,12 @@ public class ContactHelper extends HelperBase {
     fullFillBdayOdContact(addContactData);
     fullFillBmonthOfContact(addContactData);
     fullFillbmonthOfContact(addContactData);
-    //выбрать елемент из выпадающего списка
-    if (isElementPresent(wd.findElement(By.name("new group")))) {
+
+    if (creation) {
       new Select(wd.findElement(By.name("new group"))).selectByVisibleText(addContactData.getGroup());
+    } else {
+      Assert.assertFalse((isElementPresent(By.name("new group"))));
     }
-
-  }
-
-  private boolean isElementPresent(By locator) {
-    try {
-      wd.findElement(locator);
-      return true;
-    } catch (NoSuchElementException ex) {
-      return false;
-    }
-
-
   }
 
 

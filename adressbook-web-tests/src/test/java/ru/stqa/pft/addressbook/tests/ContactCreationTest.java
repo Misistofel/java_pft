@@ -13,7 +13,7 @@ public class ContactCreationTest extends TestBase{
     app.goToAddNewPage();
     app.getContactHelper().fillAddNewForm(new AddContactData("Margo", "Marina", "Tofel",
             "Kyiv", "380111111111", "380111111112", "mtofel@mail.ru",
-            "1", "JANUARY", "1990", "Ma"));
+            "1", "JANUARY", "1990","Ma"),true);
     app.getContactHelper().submitAddNewCreation();
     app.logout();
   }
