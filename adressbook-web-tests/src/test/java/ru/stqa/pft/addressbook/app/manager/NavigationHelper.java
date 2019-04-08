@@ -10,7 +10,7 @@ public class NavigationHelper extends HelperBase {
   public NavigationHelper(WebDriver wd) {
     super(wd);
   }
-
+//проверяем, находимся ли мы на нужной странице:
   public void gotoGroupPage() {
     if (isElementPresent(By.tagName("h1"))
             && wd.findElement(By.tagName("h1")).getText().equals("Groups")

@@ -103,4 +103,13 @@ public class ContactHelper extends HelperBase {
   public void updateContactModification() {
     click(By.name("update"));
   }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
+  }
+
+  public void createContact(AddContactData contact, boolean creation) {
+    fillAddNewForm(contact, creation);
+    submitAddNewCreation();
+  }
 }
