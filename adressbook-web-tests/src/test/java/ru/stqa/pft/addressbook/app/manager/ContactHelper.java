@@ -16,8 +16,7 @@ public class ContactHelper extends HelperBase {
     super(wd);
   }
 
-  public void submitAddNewCreation() {
-    click(By.xpath("(//input[@name='submit'])[2]"));
+  public void submitAddNewCreation() { click(By.xpath("(//input[@name='submit'])[2]"));
   }
 
   public void fillAddNewForm(AddContactData addContactData, boolean creation) {
@@ -104,12 +103,20 @@ public class ContactHelper extends HelperBase {
     click(By.name("update"));
   }
 
-  public boolean isThereAContact() {
-    return isElementPresent(By.name("selected[]"));
-  }
+
 
   public void createContact(AddContactData contact, boolean creation) {
     fillAddNewForm(contact, creation);
     submitAddNewCreation();
+    //fillAddNewForm(new AddContactData("Margo", "Marina", "Tofel",
+    //     "Kyiv", "380111111111", "380111111112", "mtofel@mail.ru",
+    //    "1", "JANUARY", "1990","Ma"),true);
+   // submitAddNewCreation();
+    ///app.logout();
+
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
   }
 }
