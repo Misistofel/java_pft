@@ -18,11 +18,9 @@ public class ContactDeletionTest extends TestBase {
               "Kyiv", "380111111111", "380111111112", "mtofel@mail.ru",
               "1", "JANUARY", "1990", "Ma"), true);
     }
-
     app.getContactHelper().selectContact();
     app.getContactHelper().deleteSelectedContact();
-
+    app.getContactHelper().isAlertPresent();
   }
-
 
 }
