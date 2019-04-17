@@ -97,8 +97,13 @@ public class ContactHelper extends HelperBase {
   }
 
   public void deleteSelectedContact() {
+
     click(By.xpath("//input[@value='DELETE']"));
+    wd.switchTo().alert().accept();
+    wd.findElement(By.cssSelector("div.msgbox"));
   }
+
+
 
   public void initContactModification() {
     click(By.xpath("//img[@alt='EDIT']"));

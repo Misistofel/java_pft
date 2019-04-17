@@ -20,8 +20,8 @@ public class ContactDeletionTest extends TestBase {
     }
     app.getContactHelper().selectContact();
     app.getContactHelper().deleteSelectedContact();
-   if (app.getContactHelper().isAlertPresent()) {
-   } else (????);
+    //   if (app.getContactHelper().isAlertPresent()) {
+   //} else (????);
    }
   }
 
